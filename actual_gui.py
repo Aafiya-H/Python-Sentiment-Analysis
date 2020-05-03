@@ -11,10 +11,10 @@ from fastai.text import *
 root = Tk()
 root.configure(background="#85eaed")
 root.title('Sentiment Analysis')
-root.iconbitmap("LOGO.ico")
+root.iconbitmap("Images\\LOGO.ico")
 
 txt = "Welcome to the Sentiment Analysis application"
-img = ImageTk.PhotoImage(Image.open("LOGO_cropped.png"))
+img = ImageTk.PhotoImage(Image.open("Images\\LOGO_cropped.png"))
 s = """We provide you with two options here. 
 
 Option 1 : You can either enter a statement and we will guess if the statement is positive or negative.
@@ -87,7 +87,7 @@ def submit():
     if (c == 1):
         top1 = Toplevel()
         top1.configure(background="#85eaed")
-        top1.iconbitmap("LOGO.ico")
+        top1.iconbitmap("Images\\LOGO.ico")
         s2 = Label(top1, text='\n', bg="#85eaed")
         s2.pack(fill=X)
         l1 = Label(top1, text="You selected option " + str(c), bg="#85eaed", fg="#072d2e")
@@ -114,7 +114,7 @@ def submit():
         
         global top2
         top2 = Toplevel()
-        top2.iconbitmap("LOGO.ico")
+        top2.iconbitmap("Images\\LOGO.ico")
         top2.configure(background="#85eaed")
         s2 = Label(top2, text='\n', bg="#85eaed")
         s2.pack(fill=X)
