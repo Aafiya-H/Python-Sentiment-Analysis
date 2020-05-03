@@ -1,19 +1,13 @@
 from tkinter import *
 from tkinter import filedialog
 import pickle
-# import tensorflow as tf
-# from tensorflow.keras.models import load_model
 import numpy as np
-# from keras.preprocessing.text import Tokenizer
 import tkinter.font as font
 from PIL import ImageTk, Image
 from fastai import *
 from fastai.text import *
 
-# print(tf.__version__)
-# model = tf.keras.models.load_model("model.h5")
-# tokenizer = pickle.load(open('tokenizer.pkl', 'rb'))
-# model.summary()
+
 root = Tk()
 root.configure(background="#85eaed")
 root.title('Sentiment Analysis')
@@ -54,32 +48,27 @@ def single(statement, top1):
     return
 
 
-def get_path(dataset_path):
-    top2.filename = filedialog.askopenfile(initialdir='C:\\Users\\Aafiya Hussain\\Desktop\\GUI\\New GUI\\Python-Sentiment-Analysis', title='Select file',filetypes=[("Dataset files",'*.csv')])
+def get_path():
+    global dataset_path
+    top2.filename = filedialog.askopenfile(initialdir='C:\\Users\\Aafiya Hussain\\Desktop\\GUI\\New GUI2\\Python-Sentiment-Analysis', title='Select file',filetypes=[("All files",'*.*')])
     print(top2.filename.name)
     dataset_path = top2.filename.name
 
-# def single(path,top2):
-# 	s="The statement entered is \" "+path+" \" "
-# 	ls=Label(top2,text=s)
-# 	ls.pack()
-# 	return
 
 def predict_result(ee1):
     input_s=ee1.get()
-    loaded_model=load_learner('/home/talha/Desktop/Python-Sentiment-Analysis',"ulmfit_model.pkl")
+    loaded_model=load_learner('C:\\Users\\Aafiya Hussain\\Desktop\\GUI\\New GUI2\\Python-Sentiment-Analysis',"ulmfit_model.pkl")
     predicted_val=loaded_model.predict(input_s)
     print("Statement is: ",input_s,end= ' ')
     print(str(predicted_val[0]))
     if str(predicted_val[0])=='positive':
-        output_text = "Positivity always wins…Always"
+        output_text = "Positivity always wins…Always :D :) ^.^"
     else:
-        output_text = "Negativity will tear you down. Be more positive"
+        output_text = "Negative :/ :("
     return output_text
 
 def dataset_predict(dataset_path): 
-    loaded_model=load_learner('/home/talha/Desktop/Python-Sentiment-Analysis',"ulmfit_model.pkl")
-    print("DASDASDASDASDASDASD:   ",dataset_path)
+    loaded_model=load_learner('C:\\Users\\Aafiya Hussain\\Desktop\\GUI\\New GUI2\\Python-Sentiment-Analysis',"ulmfit_model.pkl")
     reviews = pd.read_csv(dataset_path)
     predictions = []
     for index,row in reviews.iterrows():
@@ -118,8 +107,8 @@ def submit():
 
         lspace3 = Label(top1, text='\n', bg="#85eaed")
         lspace3.pack(fill=X)
-        exit = Button(top1, text="Exit", command=top1.quit)
-        exit.pack()
+        # exit = Button(top1, text="Exit", command=top1.quit)
+        # exit.pack()
 
     elif (c == 2):
         
@@ -141,9 +130,8 @@ def submit():
         upload.pack()
         l_space = Label(top2, text='\n', bg="#85eaed")
         l_space.pack()
-        # code for uploading
-        open_file = Button(top2, text='Open file', command=lambda : get_path(dataset_path)).pack()
-
+        
+        open_file = Button(top2, text='Open file', command=get_path).pack()
         l_space1 = Label(top2, text='\n', bg="#85eaed")
         l_space1.pack()
 
@@ -179,21 +167,7 @@ root.mainloop()
 
 
 
-'''
-def predict_result(ee1):
-input_s=ee1.get()
-# val = tokenizer.texts_to_sequences(li)
-# predicted_val = model.predict(val)
-loaded_model=load_learner('/home/talha/Desktop/Python-Sentiment-Analysis',"ulmfit_model.pkl")
-predicted_val=loaded_model.predict(input_s)
-print(str(predicted_val[0]))
-if str(predicted_val[0])=='positive':
-    output_text = "Positivity always wins…Always"
-else:
-    output_text = "Negativity will tear you down. Be more positive"
-return output_text
 
-'''
 
 
 

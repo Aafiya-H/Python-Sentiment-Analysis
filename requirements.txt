@@ -1,4 +1,6 @@
-tensorflow==2.1.0
+pandas
+fastai==1.0.60
+torch==1.4.0
 pickle
 numpy
 Pillow
