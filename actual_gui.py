@@ -1,18 +1,18 @@
 from tkinter import *
 from tkinter import filedialog
 import pickle
-import tensorflow as tf
+# import tensorflow as tf
 # from tensorflow.keras.models import load_model
 import numpy as np
-from keras.preprocessing.text import Tokenizer
+# from keras.preprocessing.text import Tokenizer
 import tkinter.font as font
 from PIL import ImageTk, Image
 from fastai import *
 from fastai.text import *
 
-print(tf.__version__)
-model = tf.keras.models.load_model("model.h5")
-tokenizer = pickle.load(open('tokenizer.pkl', 'rb'))
+# print(tf.__version__)
+# model = tf.keras.models.load_model("model.h5")
+# tokenizer = pickle.load(open('tokenizer.pkl', 'rb'))
 # model.summary()
 root = Tk()
 root.configure(background="#85eaed")
@@ -44,7 +44,7 @@ s1.pack(fill=X)
 e1 = Entry(root, border=2)
 e1.pack()
 e1.insert(0, "Enter your choice")
-
+dataset_path = ''
 
 def single(statement, top1):
     s = "\"" + statement + " \""
@@ -54,10 +54,10 @@ def single(statement, top1):
     return
 
 
-def get_path():
-    top2.filename = filedialog.askopenfile(initialdir='C:\\Users\\Aafiya Hussain\\Desktop\\GUI\\New GUI\\Python-Sentiment-Analysis', title='Select file',filetypes=[("image files",'*.png')])
-    print(top2.filename)
-
+def get_path(dataset_path):
+    top2.filename = filedialog.askopenfile(initialdir='C:\\Users\\Aafiya Hussain\\Desktop\\GUI\\New GUI\\Python-Sentiment-Analysis', title='Select file',filetypes=[("Dataset files",'*.csv')])
+    print(top2.filename.name)
+    dataset_path = top2.filename.name
 
 # def single(path,top2):
 # 	s="The statement entered is \" "+path+" \" "
@@ -67,17 +67,29 @@ def get_path():
 
 def predict_result(ee1):
     input_s=ee1.get()
-    # val = tokenizer.texts_to_sequences(li)
-    # predicted_val = model.predict(val)
-    loaded_model=load_learner('C:\\Users\\Aafiya Hussain\\Desktop\\GUI\\New GUI\\Python-Sentiment-Analysis',"ulmfit_model.pkl")
+    loaded_model=load_learner('/home/talha/Desktop/Python-Sentiment-Analysis',"ulmfit_model.pkl")
     predicted_val=loaded_model.predict(input_s)
-
+    print("Statement is: ",input_s,end= ' ')
     print(str(predicted_val[0]))
     if str(predicted_val[0])=='positive':
         output_text = "Positivity always wins…Always"
     else:
         output_text = "Negativity will tear you down. Be more positive"
     return output_text
+
+def dataset_predict(dataset_path): 
+    loaded_model=load_learner('/home/talha/Desktop/Python-Sentiment-Analysis',"ulmfit_model.pkl")
+    print("DASDASDASDASDASDASD:   ",dataset_path)
+    reviews = pd.read_csv(dataset_path)
+    predictions = []
+    for index,row in reviews.iterrows():
+        current_review = row['Reviews']
+        predicted_value = str(loaded_model.predict(current_review)[0])
+        predictions.append(predicted_value)
+
+    reviews['Predictions'] = predictions
+    reviews.to_csv(dataset_path)
+    print("Done :D :D ")
 
 
 def submit():
@@ -130,12 +142,12 @@ def submit():
         l_space = Label(top2, text='\n', bg="#85eaed")
         l_space.pack()
         # code for uploading
-        open_file = Button(top2, text='Open file', command=get_path).pack()
+        open_file = Button(top2, text='Open file', command=lambda : get_path(dataset_path)).pack()
 
         l_space1 = Label(top2, text='\n', bg="#85eaed")
         l_space1.pack()
 
-        bb2 = Button(top2, text="Submit for testing", command=lambda: dataset(output_text, top2))
+        bb2 = Button(top2, text="Submit for testing", command=lambda : dataset_predict(dataset_path))
         bb2.pack()
         l_space2 = Label(top2, text='\n', bg="#85eaed")
         l_space2.pack()
@@ -160,16 +172,29 @@ exit = Button(root, text="Exit", command=root.quit)
 exit.pack()
 
 root.mainloop()
-# loaded_model=load_learner(folder_path,"ulmfit_model.pkl")
-# #######################################
-'''
 
-val = tokenizer.texts_to_sequences(val)
-predicted_val = model.predict(val)
-print(np.squeeze(predicted_val))
-if predicted_val > 0.5 :
-    print("Positive :))")
+
+
+
+
+
+
+'''
+def predict_result(ee1):
+input_s=ee1.get()
+# val = tokenizer.texts_to_sequences(li)
+# predicted_val = model.predict(val)
+loaded_model=load_learner('/home/talha/Desktop/Python-Sentiment-Analysis',"ulmfit_model.pkl")
+predicted_val=loaded_model.predict(input_s)
+print(str(predicted_val[0]))
+if str(predicted_val[0])=='positive':
+    output_text = "Positivity always wins…Always"
 else:
-    print("Negative :(")
+    output_text = "Negativity will tear you down. Be more positive"
+return output_text
 
 '''
+
+
+
+
