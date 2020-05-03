@@ -7,6 +7,8 @@ import numpy as np
 from keras.preprocessing.text import Tokenizer
 import tkinter.font as font
 from PIL import ImageTk, Image
+from fastai import *
+from fastai.text import *
 
 print(tf.__version__)
 model = tf.keras.models.load_model("model.h5")
@@ -64,12 +66,14 @@ def get_path():
 # 	return
 
 def predict_result(ee1):
-    li = []
-    li.append(ee1.get())
-    val = tokenizer.texts_to_sequences(li)
-    predicted_val = model.predict(val)
-    print(predicted_val)
-    if predicted_val > 0.3:
+    input_s=ee1.get()
+    # val = tokenizer.texts_to_sequences(li)
+    # predicted_val = model.predict(val)
+    loaded_model=load_learner('C:\\Users\\Aafiya Hussain\\Desktop\\GUI\\New GUI\\Python-Sentiment-Analysis',"ulmfit_model.pkl")
+    predicted_val=loaded_model.predict(input_s)
+
+    print(str(predicted_val[0]))
+    if str(predicted_val[0])=='positive':
         output_text = "Positivity always wins…Always"
     else:
         output_text = "Negativity will tear you down. Be more positive"
@@ -156,7 +160,8 @@ exit = Button(root, text="Exit", command=root.quit)
 exit.pack()
 
 root.mainloop()
-#######################################
+# loaded_model=load_learner(folder_path,"ulmfit_model.pkl")
+# #######################################
 '''
 
 val = tokenizer.texts_to_sequences(val)
