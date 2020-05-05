@@ -99,8 +99,8 @@ def dataset_predict(dataset_path):
     positive=np.array(positive)
     negative=1-positive
     ids=range(len(positive))
-    plt.bar(ids,positive,bottom=0,color='green')
-    plt.bar(ids,negative,bottom = positive,color='red')
+    plt.bar(ids,positive,bottom=0,color='#17e80c')
+    plt.bar(ids,negative,bottom = positive,color='#a30a0a')
 
     plt.xlabel('Statements')
     plt.ylabel('Positive and Negative percentage')
