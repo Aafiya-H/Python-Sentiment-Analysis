@@ -6,7 +6,10 @@ import tkinter.font as font
 from PIL import ImageTk, Image
 from fastai import *
 from fastai.text import *
-
+import torch
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
 root = Tk()
 root.configure(background="#85eaed")
@@ -61,23 +64,51 @@ def predict_result(ee1):
     predicted_val=loaded_model.predict(input_s)
     print("Statement is: ",input_s,end= ' ')
     print(str(predicted_val[0]))
+    negative_percentage = predicted_val[2].tolist()[0]
+    positive_percentage = predicted_val[2].tolist()[1]
+
+    print(positive_percentage)
+    print(negative_percentage)
     if str(predicted_val[0])=='positive':
         output_text = "Positivity always wins…Always :D :) ^.^"
     else:
         output_text = "Negative :/ :("
+    sizes=[negative_percentage,positive_percentage]
+    labels=['negative','positive']
+    # plt.figure.suptitle('This is a somewhat long figure title', fontsize=16)
+
+    plt.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
+    plt.title('Pie chart to show percentage of positive and negative Sentiment')
+    plt.show()
+    plt.savefig ( "./pie_chart_single.png" )
+
     return output_text
 
 def dataset_predict(dataset_path): 
     loaded_model=load_learner('C:\\Users\\Aafiya Hussain\\Desktop\\GUI\\New GUI2\\Python-Sentiment-Analysis',"ulmfit_model.pkl")
     reviews = pd.read_csv(dataset_path)
     predictions = []
+    positive=[]
+    plt.title('Bar graph to show percentage of positive and negative sentiment for each statement')
     for index,row in reviews.iterrows():
         current_review = row['Reviews']
-        predicted_value = str(loaded_model.predict(current_review)[0])
-        predictions.append(predicted_value)
+        predicted_value = loaded_model.predict(current_review)
+        positive.append(predicted_value[2].tolist()[1])
+        predictions.append(str(predicted_value[0]))
 
+    positive=np.array(positive)
+    negative=1-positive
+    ids=range(len(positive))
+    plt.bar(ids,positive,bottom=0,color='green')
+    plt.bar(ids,negative,bottom = positive,color='red')
+
+    plt.xlabel('Statements')
+    plt.ylabel('Positive and Negative percentage')
+    plt.legend(('Positive', 'Negative'))
+    plt.show()
+    plt.savefig ( "./bar_graph_dataset.png" )
     reviews['Predictions'] = predictions
-    reviews.to_csv(dataset_path)
+    reviews.to_csv(dataset_path,index=False)
     print("Done :D :D ")
 
 
