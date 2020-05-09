@@ -53,14 +53,14 @@ def single(statement, top1):
 
 def get_path():
     global dataset_path
-    top2.filename = filedialog.askopenfile(initialdir='C:\\Users\\Aafiya Hussain\\Desktop\\GUI\\New GUI2\\Python-Sentiment-Analysis', title='Select file',filetypes=[("All files",'*.*')])
+    top2.filename = filedialog.askopenfile(initialdir='./', title='Select file',filetypes=[("All files",'*.*')])
     print(top2.filename.name)
     dataset_path = top2.filename.name
 
 
 def predict_result(ee1):
     input_s=ee1.get()
-    loaded_model=load_learner('C:\\Users\\Aafiya Hussain\\Desktop\\GUI\\New GUI2\\Python-Sentiment-Analysis',"ulmfit_model.pkl")
+    loaded_model=load_learner('./',"ulmfit_model.pkl")
     predicted_val=loaded_model.predict(input_s)
     print("Statement is: ",input_s,end= ' ')
     print(str(predicted_val[0]))
@@ -85,7 +85,7 @@ def predict_result(ee1):
     return output_text
 
 def dataset_predict(dataset_path): 
-    loaded_model=load_learner('C:\\Users\\Aafiya Hussain\\Desktop\\GUI\\New GUI2\\Python-Sentiment-Analysis',"ulmfit_model.pkl")
+    loaded_model=load_learner('./',"ulmfit_model.pkl")
     reviews = pd.read_csv(dataset_path)
     predictions = []
     positive=[]
