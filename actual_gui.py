@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import filedialog
+from tkinter import filedialog,ttk
 import pickle
 import numpy as np
 import tkinter.font as font
@@ -7,7 +7,6 @@ from PIL import ImageTk, Image
 from fastai import *
 from fastai.text import *
 import torch
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -15,6 +14,9 @@ root = Tk()
 root.configure(background="#85eaed")
 root.title('Sentiment Analysis')
 root.iconbitmap("Images\\LOGO.ico")
+
+def nothing(event):
+	pass
 
 txt = "Welcome to the Sentiment Analysis application"
 img = ImageTk.PhotoImage(Image.open("Images\\LOGO_cropped.png"))
@@ -38,9 +40,16 @@ info['font'] = info_font
 info.pack(fill=X)
 s1 = Label(root, text='\n', bg='#85eaed')
 s1.pack(fill=X)
-e1 = Entry(root, border=2)
-e1.pack()
-e1.insert(0, "Enter your choice")
+# e1 = Entry(root, border=2)
+# e1.pack()
+# e1.insert(0, "Enter your choice")
+opts=['Option 1','Option 2']
+e1=StringVar()
+e1.set(opts[0])
+
+drop=OptionMenu(root,e1,*opts)
+drop.pack(pady=20)
+
 dataset_path = ''
 
 def single(statement, top1):
@@ -79,7 +88,7 @@ def predict_result(ee1):
 
     plt.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
     plt.title('Pie chart to show percentage of positive and negative Sentiment')
-    plt.show()
+    # plt.show()
     plt.savefig ( "./pie_chart_single.png" )
 
     return output_text
@@ -105,17 +114,16 @@ def dataset_predict(dataset_path):
     plt.xlabel('Statements')
     plt.ylabel('Positive and Negative percentage')
     plt.legend(('Positive', 'Negative'))
-    plt.show()
+    # plt.show()
     plt.savefig ( "./bar_graph_dataset.png" )
     reviews['Predictions'] = predictions
     reviews.to_csv(dataset_path,index=False)
-    print("Done :D :D ")
+    # print("Done :D :D ")
 
 
 def submit():
     c = e1.get()
-    c = int(c)
-    if (c == 1):
+    if (c == 'Option 1'):
         top1 = Toplevel()
         top1.configure(background="#85eaed")
         top1.iconbitmap("Images\\LOGO.ico")
@@ -141,7 +149,7 @@ def submit():
         # exit = Button(top1, text="Exit", command=top1.quit)
         # exit.pack()
 
-    elif (c == 2):
+    elif (c == 'Option 2'):
         
         global top2
         top2 = Toplevel()
