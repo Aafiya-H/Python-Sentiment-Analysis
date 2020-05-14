@@ -24,7 +24,7 @@ s = """We provide you with two options here.
 
 Option 1 : You can either enter a statement and we will guess if the statement is positive or negative.
 
-Option 2 : You can provide the path of a file and we will analyze the number of positive and negative statements.
+Option 2 : You can upload a file and we will analyze the sentiment of the statements.
 """
 intro_font = font.Font(family='Helvetica', size=25, weight='bold', slant='italic', underline='1')
 intro = Label(root, text=txt, fg="#FFFFFF", height="3", bg="#072d2e")
@@ -56,7 +56,7 @@ def single(statement, my_frame2):
     s = "\"" + statement + " \""
     ls = Label(my_frame2, text=s, bg="#85eaed")
     ls['font'] = info_font
-    ls.pack()
+    ls.pack(fill=X)
     l_space2 = Label(my_frame2, text='\n', bg="#85eaed")
     l_space2.pack(fill=X)
     # img_single=ImageTk.PhotoImage(Image.open("Images\\pie_chart_single.png"))
@@ -111,7 +111,7 @@ def dataset_predict(dataset_path,my_frame2):
     reviews = pd.read_csv(dataset_path)
     predictions = []
     positive=[]
-    plt.title('Bar graph to show percentage of positive and negative sentiment for each statement')
+    plt.title('Bar graph to show percentage of \npositive and negative sentiment for each \nstatement')
     for index,row in reviews.iterrows():
         current_review = row['Reviews']
         predicted_value = loaded_model.predict(current_review)
@@ -172,8 +172,8 @@ def submit():
         bb1 = Button(my_frame1, text="Submit for testing", command=lambda: single(predict_result(ee1), my_frame2))
         bb1.pack()
 
-        lspace3 = Label(my_frame1, text='\n', bg="#85eaed")
-        lspace3.pack(fill=X)
+        lspace3 = Label(my_frame1, text='\n')
+        lspace3.pack()
 
         exit = Button(top1, text="Exit", command=top1.quit)
         exit.pack()
@@ -185,33 +185,33 @@ def submit():
         top2 = Toplevel()
         top2.iconbitmap("Images\\LOGO.ico")
         my_notebook=ttk.Notebook(top2)
-        my_frame1=ttk.Frame(my_notebook,width=500,height=500)
-        my_frame2=ttk.Frame(my_notebook,width=500,height=500)#,bg='#85eaed'
+        my_frame1=ttk.Frame(my_notebook)#,width=500,height=500
+        my_frame2=ttk.Frame(my_notebook)#,bg='#85eaed'
         my_notebook.add(my_frame1,text="Upload")
         my_notebook.add(my_frame2,text="Result")
         my_notebook.pack(pady=15)
-        s2 = Label(top2, text='\n', bg="#85eaed")
-        s2.pack(fill=X)
+        # s2 = Label(top2, text='\n', bg="#85eaed")
+        # s2.pack(fill=X)
         l1 = Label(my_frame1, text="You selected " + str(c), bg="#85eaed", fg="#072d2e")
         l1['font'] = font.Font(family='Helvetica', size=20, weight='bold')
-        l1.pack()
+        l1.pack(fill=X)
 
         lspace1 = Label(my_frame1, text='\n', bg="#85eaed")
         lspace1.pack(fill=X)
 
         upload = Label(my_frame1, text="Upload file", bg="#85eaed")
         upload['font'] = info_font
-        upload.pack()
-        l_space = Label(my_frame1, text='\n', bg="#85eaed")
+        upload.pack(fill=X)
+        l_space = Label(my_frame1, text='\n')
         l_space.pack()
         
         open_file = Button(my_frame1, text='Open file', command=get_path).pack()
-        l_space1 = Label(my_frame1, text='\n', bg="#85eaed")
+        l_space1 = Label(my_frame1, text='\n')
         l_space1.pack()
 
         bb2 = Button(my_frame1, text="Submit for testing", command=lambda : dataset_predict(dataset_path,my_frame2))
         bb2.pack()
-        l_space2 = Label(my_frame1, text='\n', bg="#85eaed")
+        l_space2 = Label(my_frame1, text='\n')
         l_space2.pack()
         
         exit = Button(top2, text="Exit", command=top2.quit)
