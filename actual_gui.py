@@ -14,7 +14,7 @@ root = Tk()
 root.configure(background="#85eaed")
 root.title('Sentiment Analysis')
 root.iconbitmap("Images\\LOGO.ico")
-
+count_single=0
 def nothing(event):
 	pass
 
@@ -52,11 +52,22 @@ drop.pack(pady=20)
 
 dataset_path = ''
 
-def single(statement, top1):
+def single(statement, my_frame2):
     s = "\"" + statement + " \""
-    ls = Label(top1, text=s, bg="#85eaed")
+    ls = Label(my_frame2, text=s, bg="#85eaed")
     ls['font'] = info_font
     ls.pack()
+    l_space2 = Label(my_frame2, text='\n', bg="#85eaed")
+    l_space2.pack(fill=X)
+    # img_single=ImageTk.PhotoImage(Image.open("Images\\pie_chart_single.png"))
+    # canvas=Canvas(my_frame2,width=300,height=300)
+    # canvas.pack()
+    path_single="./Images/pie_chart_single"+str(count_single)+".png"
+    img_single=ImageTk.PhotoImage(Image.open(path_single))
+    # canvas.create_image(20,20, anchor=NW, image=img_single)  
+    img_label = Label(my_frame2, image=img_single, bg='#420de0')  # '#420de0'
+    img_label.image=img_single
+    img_label.pack(fill=X)
     return
 
 
@@ -87,13 +98,15 @@ def predict_result(ee1):
     # plt.figure.suptitle('This is a somewhat long figure title', fontsize=16)
 
     plt.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
-    plt.title('Pie chart to show percentage of positive and negative Sentiment')
-    # plt.show()
-    plt.savefig ( "./pie_chart_single.png" )
-
+    plt.title('Pie chart to show percentage of positive and negative Sentiment for :\n'+input_s)
+    global count_single
+    count_single+=1
+    path_single="./Images/pie_chart_single"+str(count_single)+".png"
+    plt.savefig (path_single)
+    plt.show()
     return output_text
 
-def dataset_predict(dataset_path): 
+def dataset_predict(dataset_path,my_frame2): 
     loaded_model=load_learner('./',"ulmfit_model.pkl")
     reviews = pd.read_csv(dataset_path)
     predictions = []
@@ -115,9 +128,15 @@ def dataset_predict(dataset_path):
     plt.ylabel('Positive and Negative percentage')
     plt.legend(('Positive', 'Negative'))
     # plt.show()
-    plt.savefig ( "./bar_graph_dataset.png" )
+    plt.savefig ( "./Images/bar_graph_dataset.png" )
     reviews['Predictions'] = predictions
     reviews.to_csv(dataset_path,index=False)
+
+    img_dataset=ImageTk.PhotoImage(Image.open("./Images/bar_graph_dataset.png"))
+    # canvas.create_image(20,20, anchor=NW, image=img_single)  
+    img_label = Label(my_frame2, image=img_dataset, bg='#420de0')  # '#420de0'
+    img_label.image=img_dataset
+    img_label.pack(fill=X)
     # print("Done :D :D ")
 
 
@@ -125,60 +144,77 @@ def submit():
     c = e1.get()
     if (c == 'Option 1'):
         top1 = Toplevel()
-        top1.configure(background="#85eaed")
+        top1.title('Single')
         top1.iconbitmap("Images\\LOGO.ico")
-        s2 = Label(top1, text='\n', bg="#85eaed")
+        my_notebook=ttk.Notebook(top1)
+        # my_notebook.pack(pady=15)
+        my_frame1=ttk.Frame(my_notebook,width=500,height=500)
+        my_frame2=ttk.Frame(my_notebook,width=500,height=500)#,bg='#85eaed'
+        my_notebook.add(my_frame1,text="Statement")
+        my_notebook.add(my_frame2,text="Result")
+        my_notebook.pack(pady=15)
+        # top1.configure(background="#85eaed")
+        
+        s2 = Label(my_frame1, text='\n', bg="#85eaed")
         s2.pack(fill=X)
-        l1 = Label(top1, text="You selected option " + str(c), bg="#85eaed", fg="#072d2e")
+        l1 = Label(my_frame1, text="You selected " + str(c), bg="#85eaed", fg="#072d2e")
         l1['font'] = font.Font(family='Helvetica', size=20, weight='bold')
-        l1.pack()
+        l1.pack(fill=X)
 
-        lspace1 = Label(top1, text='\n', bg="#85eaed")
+        lspace1 = Label(my_frame1, text='\n', bg="#85eaed")
         lspace1.pack(fill=X)
 
-        ee1 = Entry(top1, border=2)
+        ee1 = Entry(my_frame1, border=2)
         ee1.insert(0, 'Enter your statement')
         ee1.pack(fill=X)
-        lspace2 = Label(top1, text='\n', bg="#85eaed")
+        lspace2 = Label(my_frame1, text='\n', bg="#85eaed")
         lspace2.pack(fill=X)
-        bb1 = Button(top1, text="Submit for testing", command=lambda: single(predict_result(ee1), top1))
+        bb1 = Button(my_frame1, text="Submit for testing", command=lambda: single(predict_result(ee1), my_frame2))
         bb1.pack()
 
-        lspace3 = Label(top1, text='\n', bg="#85eaed")
+        lspace3 = Label(my_frame1, text='\n', bg="#85eaed")
         lspace3.pack(fill=X)
-        # exit = Button(top1, text="Exit", command=top1.quit)
-        # exit.pack()
+
+        exit = Button(top1, text="Exit", command=top1.quit)
+        exit.pack()
+        # top1.mainloop()
 
     elif (c == 'Option 2'):
         
         global top2
         top2 = Toplevel()
         top2.iconbitmap("Images\\LOGO.ico")
-        top2.configure(background="#85eaed")
+        my_notebook=ttk.Notebook(top2)
+        my_frame1=ttk.Frame(my_notebook,width=500,height=500)
+        my_frame2=ttk.Frame(my_notebook,width=500,height=500)#,bg='#85eaed'
+        my_notebook.add(my_frame1,text="Upload")
+        my_notebook.add(my_frame2,text="Result")
+        my_notebook.pack(pady=15)
         s2 = Label(top2, text='\n', bg="#85eaed")
         s2.pack(fill=X)
-        l1 = Label(top2, text="You selected option " + str(c), bg="#85eaed", fg="#072d2e")
+        l1 = Label(my_frame1, text="You selected " + str(c), bg="#85eaed", fg="#072d2e")
         l1['font'] = font.Font(family='Helvetica', size=20, weight='bold')
         l1.pack()
 
-        lspace1 = Label(top2, text='\n', bg="#85eaed")
+        lspace1 = Label(my_frame1, text='\n', bg="#85eaed")
         lspace1.pack(fill=X)
 
-        upload = Label(top2, text="Upload file", bg="#85eaed")
+        upload = Label(my_frame1, text="Upload file", bg="#85eaed")
         upload['font'] = info_font
         upload.pack()
-        l_space = Label(top2, text='\n', bg="#85eaed")
+        l_space = Label(my_frame1, text='\n', bg="#85eaed")
         l_space.pack()
         
-        open_file = Button(top2, text='Open file', command=get_path).pack()
-        l_space1 = Label(top2, text='\n', bg="#85eaed")
+        open_file = Button(my_frame1, text='Open file', command=get_path).pack()
+        l_space1 = Label(my_frame1, text='\n', bg="#85eaed")
         l_space1.pack()
 
-        bb2 = Button(top2, text="Submit for testing", command=lambda : dataset_predict(dataset_path))
+        bb2 = Button(my_frame1, text="Submit for testing", command=lambda : dataset_predict(dataset_path,my_frame2))
         bb2.pack()
-        l_space2 = Label(top2, text='\n', bg="#85eaed")
+        l_space2 = Label(my_frame1, text='\n', bg="#85eaed")
         l_space2.pack()
-        exit = Button(top2, text="Exit", command=top1.quit)
+        
+        exit = Button(top2, text="Exit", command=top2.quit)
         exit.pack()
 
     else:
