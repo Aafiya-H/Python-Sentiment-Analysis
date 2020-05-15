@@ -40,9 +40,7 @@ info['font'] = info_font
 info.pack(fill=X)
 s1 = Label(root, text='\n', bg='#85eaed')
 s1.pack(fill=X)
-# e1 = Entry(root, border=2)
-# e1.pack()
-# e1.insert(0, "Enter your choice")
+
 opts=['Option 1','Option 2']
 e1=StringVar()
 e1.set(opts[0])
@@ -140,7 +138,7 @@ def dataset_predict(dataset_path,my_frame2):
     # print("Done :D :D ")
 
 
-def submit():
+def submit(event):
     c = e1.get()
     if (c == 'Option 1'):
         top1 = Toplevel()
@@ -225,7 +223,8 @@ def submit():
 s2 = Label(root, text="\n", bg='#85eaed')
 s2.pack(fill=X)
 
-b1 = Button(root, text="Submit Choice", command=submit)
+b1 = Button(root, text="Submit Choice")
+b1.bind('<Return>',submit)#tab+Enter
 b1.pack()
 
 l = Label(root, text='\n', bg='#85eaed')
