@@ -15,8 +15,6 @@ root.configure(background="#85eaed")
 root.title('Sentiment Analysis')
 root.iconbitmap("Images\\LOGO.ico")
 count_single=0
-def nothing(event):
-	pass
 
 txt = "Welcome to the Sentiment Analysis application"
 img = ImageTk.PhotoImage(Image.open("Images\\LOGO_cropped.png"))
@@ -214,10 +212,6 @@ def submit(event):
         
         exit = Button(top2, text="Exit", command=top2.quit)
         exit.pack()
-
-    else:
-        e1.delete(0, END)
-        e1.insert(0, "Enter your choice")
 
 
 s2 = Label(root, text="\n", bg='#85eaed')
