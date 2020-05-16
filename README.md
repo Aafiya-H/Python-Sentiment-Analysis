@@ -1,5 +1,5 @@
 <p align="center"
-<img src ="https://github.com/Aafiya-H/Python-Sentiment-Analysis/blob/master/Images/LOGO_cropped.png" width = 250px>
+<img src ="https://github.com/Aafiya-H/Python-Sentiment-Analysis/blob/master/Images/LOGO_cropped.png">
 </p>
 
 <h1 align = 'center'> Sentiment Analaysis 
