@@ -1,5 +1,5 @@
-<p align="center"
-<img src ="https://github.com/Aafiya-H/Python-Sentiment-Analysis/blob/master/Images/LOGO_cropped.png">
+<p align="center">
+<img src ="./Images/LOGO_cropped.png" >
 </p>
 
 <h1 align = 'center'> Sentiment Analaysis 
@@ -22,13 +22,12 @@ There are a lot of reviews we all read today- to hotels, websites, movies, etc. 
 Interface 
 </h2>
 <p align="center">
-  <img src ="./assets/website.gif" width = 250px>
-  <img src ="./assets/website.gif" width = 250px>
+  <img src ="./Assets/home.png" width = 650px>
 </p>
 <p align="center">
-  <img src ="./assets/website.gif" width = 250px>
-  <img src ="./assets/website.gif" width = 250px>
+  <img src ="./Assets/options.png" width = 450px>
 </p>
+
 
 
 -----------------------------------
@@ -40,7 +39,7 @@ Model Architecture
   We have used  UMLfit model for text classification. It consists of 3 LSTM layers and is already trained on more than 100 million words from Wikipedia. The model architecture can be explained in the diagram below. 
 </p>
 <p align="center">
-<img src ="./assets/website.gif" width = 500px>
+<img src ="./Assets/model_architecture.PNG" width = 800px>
 </p>
 
 -----------------------------------
