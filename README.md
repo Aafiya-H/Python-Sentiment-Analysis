@@ -13,7 +13,7 @@
 About 
 </h2>
 <p align='center'>
-There are a lot of reviews we all give today- to hotels, websites, movies, etc. So in order to check the sentiment present in the review, i.e. either the review or the whole set of reviews are good or bad we have created a python project which tells us about the positivity or negativity of a review. 
+There are a lot of reviews we all read today- to hotels, websites, movies, etc. So in order to check the sentiment present in the review, i.e. either the review or the whole set of reviews are good or bad we have created a python project which tells us about the positive or negative sentiment of a review. 
 </p>
 
 -----------------------------------
@@ -34,10 +34,10 @@ Interface
 -----------------------------------
 
 <h2 align='center'>
-Algorithm Architecture
+Model Architecture
 </h2>
 <p align="left">
-  We have used the UMLfit model available in fast.ai library. It consists of 3 LSTM layers and is already trained on more than 100 million words from wikipedia. The model architecture can be explained in the diagram below. 
+  We have used  UMLfit model for text classification. It consists of 3 LSTM layers and is already trained on more than 100 million words from Wikipedia. The model architecture can be explained in the diagram below. 
 </p>
 <p align="center">
 <img src ="./assets/website.gif" width = 500px>
